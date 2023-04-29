@@ -2,8 +2,8 @@ import kado
 
 while True:
     user_input = input("kado -> ")
-    decryptor = kado.decryptor(user_input)
+    lexer = kado.Lexer(user_input)
     result = ""
-    for element in decryptor.decrypted:
+    for element in lexer.tokens:
         result += element
     print(f"-> {result}")
