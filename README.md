@@ -13,3 +13,6 @@ Coming soon
 
 **Q**: Why Kado is named like this?
 * **A**: "Kado" is the litteral pronounciation of the French word *cadeau*, meaning gift, present.
+
+**Q**: Why developping a programming language?
+* **A**: Developping a fully-working programming language is not an easy task, but we do it for fun, and when it'll be finished we'll be very proud so its good.
