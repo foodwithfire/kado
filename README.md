@@ -8,3 +8,8 @@ You'll need Python (latest version) to use Kado.
 
 ## How to Kado?
 Coming soon
+
+## FAQ
+
+**Q**: Why Kado is named like this?
+* **A**: "Kado" is the litteral pronounciation of the French word *cadeau*, meaning gift, present.
