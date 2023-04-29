@@ -1,3 +1,50 @@
+# GRAMMAR ------------------------------------------------------------------------------------------
+"""
+Grammar:
+    expression = term (PLUS|MINUS) term
+    term = factor (MUL|DIV) factor
+    factor = INT|FLOAT
+
+Objectif du Parser :
+    Transformer les Tokens en un AST (Abstract Syntax Tree)
+    Gérer les erreurs de syntaxe (ex : 2 + renverra une erreur)
+
+KESKESÉ UN AST : (Admis Sans Travailler dans l'Interpréteur paske il fait r)
+    Cé un truk qui dit en gros :
+    Oké j'ai ces tokens là: INT:69, PLUS, INT:42, MUL, FLOAT:49.3
+    KESKEJENFÉ???? ba dire dans quel ordre doit être quoi...
+    Et il nous renverra cette magnifique chaîne de tokens:
+    (INT:69, PLUS, (INT:42, MUL, FLOAT:49.3))
+    Ce qui indiquera à notre povr interpréteur dans quel ordre faire quoi.
+
+MAIS LE BOULOT DU PARSER NE S'ARRETE PAS LA !
+Il doit aussi trouver, débusquer, TRAQUER les erreurs :
+    Exemple simple :
+    Les tokens sont : INT:69, PLUS, INT:42, MUL
+    Si le parser ne trouvait pas le problème, il nous renverrait:
+    (INT:69, PLUS, (INT:42, MUL))
+    Et l'interpréteur lui, il se dirait :
+        Alor jdois d'abord faire 42, le token c'est MUL, MAIS FOIS QUOI PTN
+    et il nous renverrait une erreur :/
+
+    Alors que là, le parser devrait nous renvoyer l'erreur lui-même, avant la katastrof:
+    Si je reprends l'exemple :
+    (INT:69, PLUS, (INT:42, MUL)) -> Analyz -> AAAAA y'a un MUL tout seul là le pauvre fo pa le laisser sans
+    famille keskonvafèr aled osekour bon j'appuie sur la manette d'urgence
+
+    InvalidSyntaxError: 69 + 42 * (Int or float expected)
+    File <stdin>, at line 0
+
+    Une autre erreur un peu spéciale MAIS importante à débusquer, c'est la division par zéro.
+
+    (INT: 69, DIV, INT:0)
+
+    Là le parser doit tout de suite dire: opla on passe paaaaaaaaa
+
+    ArithmeticError: division by 0.
+    File <stdin>, at line 0
+"""
+
 # CONSTANTS ----------------------------------------------------------------------------------------
 
 DIGITS = '0123456789'
@@ -148,4 +195,5 @@ class IllegalCharError(Error):
 def run(filename, text):
     lexer = Lexer(filename, text)
     tokens, error = lexer.get_tokens()
+
     return tokens, error
