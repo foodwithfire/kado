@@ -16,3 +16,6 @@ Coming soon
 
 **Q**: Why developping a programming language?
 * **A**: Developping a fully-working programming language is not an easy task, but we do it for fun, and when it'll be finished we'll be very proud so its good.
+
+**Q**: Will Kado be fulfilled one day?
+* **A**: We hope so.
