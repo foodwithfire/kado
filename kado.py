@@ -6,6 +6,8 @@ plus = "PLUS"
 minus = "MIN"
 divide = "DIV"
 multiply = "MUL"
+endoffile = "EOF"
+
 
 class Token:
     def __init__(self, type, value=None):
@@ -13,45 +15,50 @@ class Token:
         self.type = type
         self.format = f"[{self.type}]"
         if self.value != None:
-            self.format += f"->'{self.value}'"
-        self.format += " | "
+            self.format += f" - '{self.value}'"
+        if self.type != endoffile:
+            self.format += " | "
 
-class decryptor:
+
+class Decryptor:
     def __init__(self, user_input):
         self.decrypted = []
         self.user_input = user_input
         self.current_char = ""
         self.pos = 0
         self.decrypt()
-       
+        self.token_type = None
+        self.token_value = None
+
     def decrypt(self):
         while self.pos < len(self.user_input):
             self.current_char = self.user_input[self.pos]
-            
+
             if self.current_char in digits:
-                self.type = integer
-                self.value = self.current_char
+                self.token_type = integer
+                self.token_value = self.current_char
             elif self.current_char == " ":
                 self.next_char()
                 continue
             elif self.current_char in "+-*/":
-                self.value = None
+                self.token_value = None
                 if self.current_char == "+":
-                    self.type = plus
+                    self.token_type = plus
                 elif self.current_char == "-":
-                    self.type = minus
+                    self.token_type = minus
                 elif self.current_char == "*":
-                    self.type = multiply
+                    self.token_type = multiply
                 elif self.current_char == "/":
-                    self.type = divide
+                    self.token_type = divide
             else:
-
-                    self.decrypted = f"Error : Illegal character -> '{self.current_char}'"
-                    break                    
-            self.token = Token(self.type, self.value)
-            self.decrypted.append(self.token.format)
+                self.decrypted = f"Error : Illegal character -> '{self.current_char}'"
+                break
+            self.decrypted.append(Token(self.token_type, self.token_value).format)
             self.next_char()
-       
+
+        if type(self.decrypted) == "<class 'list'>":
+            self.decrypted.append(Token(endoffile).format)
+
     def next_char(self):
         self.pos += 1
         self.current_char = ""
