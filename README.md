@@ -19,3 +19,6 @@ Coming soon
 
 **Q**: Will Kado be fulfilled one day?
 * **A**: We hope so.
+
+**Q**: Food, food-food food food food ?
+* **A**: Food.
