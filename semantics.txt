@@ -1,0 +1,136 @@
+Afficher (print):
+    print("string"), print(variable), print("string", variable)
+
+-----------------------------------------------------------
+
+Déclaration de variables et de constantes:
+    var food = 42, var bonjour = "bonjour"
+    const pi = 3.1415926535, const no = False
+
+-----------------------------------------------------------
+
+Incrémentation, décrémentation, multiplication, division:
+    food += 1, food -= 1, food *= 1, food /= 1
+
+-----------------------------------------------------------
+
+Opérateurs:
+    Addition: +
+    Soustraction: -
+    Multiplication: *
+    Division: /
+    Puissance: ^
+
+    Strictement supérieur: >
+    Strictement inférieur: <
+    Strictement égal: ==
+    Inférieur ou égal: <=
+    Supérieur ou égal: >=
+    Différent: !=
+    Inclus (dans): in
+
+    Opérateur booléen vrai: true
+    Opérateur booléen faux: false
+    Opérateur booléen quelconque: ??
+
+    Et: &, and
+    Ou: |, or
+    Non: not
+
+-----------------------------------------------------------
+
+Instructions conditionnelles:
+    PROPOSITION 1 (Python):
+        if food == 42:
+            print("Hello")
+    PROPOSITION 2 (Upita):
+        if food == 42:
+            then print("Hello")
+        else:
+            #staticvoid#
+    PROPOSITION 3 (Java):
+        if (food == 42):
+            print("Hello")
+    PROPOSITION 4 (Batch):
+        if food == 42 (
+            print("Hello")
+        ) else (
+            print("Pa hello") )
+
+-----------------------------------------------------------
+
+Boucles For:
+    PROPOSITION 1 (Python):
+        var food = "food"
+        for char in food:
+            print(char)
+    PROPOSITION 2 (Upita):
+        var food = "food"
+        for char in food[
+            print(char)
+        ]
+    PROPOSITION 3 (Batch):
+        var food = "food"
+        for %char in food then/do print(%char)
+
+-----------------------------------------------------------
+
+Boucles For in range:
+    PROPOSITION 1 (Python):
+        for i in range(10):
+            print("Hello")
+    PROPOSITION 2 (Upita):
+        for i in range(10)[
+            print("Hello")
+        ]
+    PROPOSITION 3 (Batch):
+        for /l (0, 1, 10) then/do print("Hello")
+
+-----------------------------------------------------------
+
+Boucles While:
+    PROPOSITION 1 (Python):
+    var food = 40
+    while food < 42:
+        food += 1
+        print(food)
+    PROPOSITION 2 (Upita):
+    var food = 40
+    loop if food < 42[
+        food += 1
+        print(food)
+    ]
+    PROPOSITION 3 (Batch):
+    *rien ça existe pa en batch :(*
+
+-----------------------------------------------------------
+
+Boucles While infinies:
+    PROPOSITION 1 (Python):
+        while True:
+    PROPOSITION 2 (Upita/Python)
+        while True[
+    PROPOSITION 3 (Upita v2)
+        while true:
+    PROPOSITION 4 (Upita v3)
+        while true[
+    PROPOSITION 5 (Upita pur)
+        loop if true[
+
+-----------------------------------------------------------
+
+Listes:
+    list funcraft = ["Karim", "bibo", "Faeke"]
+    PROPOSITION 1:
+        list.add("YouLeGamer", "firefood")
+    PROPOSITION 2:
+        list.append("YouLeGamer", "firefood")
+
+    PROPOSITION 1:
+        list.get[0] (renvoie Karim)
+    PROPOSITION 2:
+        list[0] (renvoie Karim ossi)
+
+-----------------------------------------------------------
+
+

@@ -51,14 +51,15 @@ DIGITS = '0123456789'
 
 # TOKENS DECLARATION -------------------------------------------------------------------------------
 
-TOKEN_INT = "INT"
-TOKEN_FLOAT = "FLOAT"
-TOKEN_PLUS = "PLUS"
-TOKEN_MINUS = "MINUS"
-TOKEN_MUL = "MUL"
-TOKEN_DIV = "DIV"
-TOKEN_LPAREN = "LPAREN"
-TOKEN_RPAREN = "RPAREN"
+TOKEN_INT = "INT"  # Nombre entier quelconque
+TOKEN_FLOAT = "FLOAT"  # Nombre décimal quelconque
+TOKEN_PLUS = "PLUS"  # Opérateur d'addition "+"
+TOKEN_MINUS = "MINUS"  # Opérateur de soustraction "-"
+TOKEN_MUL = "MUL"  # Opérateur de multiplication "*"
+TOKEN_DIV = "DIV"  # Opérateur de division "/"
+TOKEN_LPAREN = "LPAREN"  # Parenthèse gauche "("
+TOKEN_RPAREN = "RPAREN"  # Parenthèse droite ")"
+TOKEN_COMMENT = "COMMENT"  # Commentaires "//", "::", "##", '"""', "/* */"
 TOKEN_EOF = "EOF"
 
 # TOKEN CLASS --------------------------------------------------------------------------------------
@@ -156,13 +157,11 @@ class Lexer:
             if self.current_char == '.':
                 if dot_count == 1:
                     break
-                else:
-                    dot_count += 1
-                    num_str += '.'
-                    self.lexer_advance()
+                dot_count += 1
+                num_str += '.'
             else:
                 num_str += self.current_char
-                self.lexer_advance()
+            self.lexer_advance()
         if dot_count == 0:
             return Token(TOKEN_INT, int(num_str))
         else:
@@ -183,6 +182,78 @@ class Error:
         error += f'File {self.filename}, at line {self.line + 1}\033[0m'
         return error
 
+# NODE CLASSES -------------------------------------------------------------------------------------
+
+class NumberNode:
+
+    def __init__(self, token):
+        self.token = token
+
+    def __repr__(self):
+        return f'{self.token}'
+
+class BinOpNode:
+
+    def __init__(self, left_node, operator_token, right_node):
+        self.left_node = left_node
+        self.operator_token = operator_token
+        self.right_node = right_node
+
+    def __repr__(self):
+        return f'({self.left_node}, {self.operator_token}, {self.right_node}'
+
+# PARSER CLASS -------------------------------------------------------------------------------------
+
+class Parser:
+
+    def __init__(self, tokens):
+        self.tokens = tokens
+        self.token_index = -1
+        self.current_token = None
+        self.parser_advance()
+
+    def parser_advance(self):
+        self.token_index += 1
+        if self.token_index < len(self.tokens):
+            self.current_token = self.tokens[self.token_index]
+        else:
+            self.current_token = None
+        return self.current_token
+
+    """
+    Rappel de la grammaire:
+        expr = term ((PLUS|MINUS) term)*
+        term = factor ((MUL|DIV) factor)*
+        factor = INT|FLOAT
+    """
+
+    def factor(self):
+        token = self.current_token
+        print(token.type)
+        if self.current_token.type == TOKEN_INT or self.current_token.type == TOKEN_FLOAT:
+            self.parser_advance()
+            return NumberNode(token)
+
+    def term(self):
+        return self.binary_operation(self.factor, (TOKEN_MUL, TOKEN_DIV))
+
+    def expression(self):
+        return self.binary_operation(self.term, (TOKEN_PLUS, TOKEN_MINUS))
+
+    def binary_operation(self, func, ops):
+        left_factor = func()
+        while self.current_token in ops:
+            operator_token = self.current_token
+            self.parser_advance()
+            right_factor = func()
+            left_factor = BinOpNode(left_factor, operator_token, right_factor)
+        return left_factor
+
+    def parse(self):
+        parsing_result = self.expression()
+        print(parsing_result)
+        return parsing_result
+
 # CLASSES FOR ERRORS -------------------------------------------------------------------------------
 
 class IllegalCharError(Error):
@@ -195,5 +266,9 @@ class IllegalCharError(Error):
 def run(filename, text):
     lexer = Lexer(filename, text)
     tokens, error = lexer.get_tokens()
+    if error:
+        return None, error
 
-    return tokens, error
+    parser = Parser(tokens)
+    ast = parser.parse()
+    return ast, None
